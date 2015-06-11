@@ -8,11 +8,11 @@
 var DragDrop = {
   //targetElement : null,
 
-  init : function (elementSelector) {
+  init : function (dropZoneSelector, resultZoneSelector) {
     window.addEventListener(
       "load",
       function () {
-        var dropZone = document.querySelector(elementSelector);
+        var dropZone = document.querySelector(dropZoneSelector);
         if (dropZone == null) {
           console.log("Error: dropZone is null");
           return;
@@ -34,7 +34,7 @@ var DragDrop = {
         );
         dropZone.addEventListener(
           "drop",
-          function(evt) { DragDrop.handleDrop(evt); },
+          function(evt) { DragDrop.handleDrop(evt, resultZoneSelector); },
           false 
         );
       },
@@ -58,18 +58,24 @@ var DragDrop = {
     this.disableDefaultActions(evt);
     evt.target.style.borderColor = "#cca";
   },
-  handleDrop : function(evt) {
+  handleDrop : function(evt, resultZoneSelector) {
     this.disableDefaultActions(evt);
-    alert (evt.dataTransfer.files.length);
+    var file = evt.dataTransfer.files[0];
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      document.querySelector(resultZoneSelector).innerHTML =  e.target.result;
+    };
+    reader.readAsText(file);
   }
 };
 
-DragDrop.init("#drop-zone");
+DragDrop.init("#drop-zone", "#result-zone");
 </script>
 
 <body>
 
 <div id="drop-zone"></div>
+<div><pre id="result-zone"></pre></div>
 
 </body>
 </html>
