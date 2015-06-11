@@ -6,8 +6,7 @@
 
 <script>
 var DragDrop = {
-  //targetElement : null,
-
+  
   init : function (dropZoneSelector, resultZoneSelector) {
     window.addEventListener(
       "load",
@@ -46,18 +45,22 @@ var DragDrop = {
     evt.preventDefault();
     evt.stopPropagation();
   },
+  
   handleDragEnter : function(evt) {
     this.disableDefaultActions(evt);
     evt.target.style.borderColor = "red";
   },
+  
   handleDragOver : function(evt) {
     this.disableDefaultActions(evt);
     evt.dataTransfer.dropEffect = "copy";
   },
+  
   handleDragLeave : function(evt) {
     this.disableDefaultActions(evt);
     evt.target.style.borderColor = "#cca";
   },
+  
   handleDrop : function(evt, resultZoneSelector) {
     this.disableDefaultActions(evt);
     var file = evt.dataTransfer.files[0];
