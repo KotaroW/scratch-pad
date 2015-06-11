@@ -1,12 +1,16 @@
-<!DOCTYPE html>
-<html>
-<style>
-#drop-zone { width: 100%; height: 200px; border: 1px dashed #cca; border-radius: 5px; }
-</style>
-
-<script>
+/*******************************************************
+ * file: DragDrop.js
+ * date: 11 June, 2015
+ * version: beta
+ * description:
+ *    file drag and drop example
+*******************************************************/
 var DragDrop = {
-  
+  /*
+  Parameters:
+    dropZoneSelector-> html element on which file is dropped.
+    resultZoneSelector -> html element where the results are displayed
+  */
   init : function (dropZoneSelector, resultZoneSelector) {
     window.addEventListener(
       "load",
@@ -71,14 +75,3 @@ var DragDrop = {
     reader.readAsText(file);
   }
 };
-
-DragDrop.init("#drop-zone", "#result-zone");
-</script>
-
-<body>
-
-<div id="drop-zone"></div>
-<div><pre id="result-zone"></pre></div>
-
-</body>
-</html>
