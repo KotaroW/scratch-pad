@@ -28,7 +28,7 @@ var Bird = {
 	},
 
 	draw : function () {
-		this.cvsCxt.clearRect ( 0, 0, 100, 100 );		// 3rd and 4th arguments are arbitrary.
+		this.cvsCxt.clearRect ( 0, 0, 100, 100 );		// 3rd and 4th argument are arbitrary.
 		this.cvsCxt.beginPath ();
 
 		this.startAngle = ( this.startAngle == this.maxAngle ) ? 0 : ++this.startAngle;
