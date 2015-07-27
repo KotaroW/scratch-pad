@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script>
+/*
+this function returns an object which can make ajax calls.
+*/
+function ajaxFactory () {
+  /*
+  these variables will be enclosed in each instance.     
+  */
+  var xhr = new XMLHttpRequest ();
+  var ajaxId;   // ajax call tracker
+  return {
+    callAjax : function (_ajaxId) {
+      ajaxId = _ajaxId;
+      /* the xhr variable below is unique to each object instance. */
+      xhr.onload = function ( evt ) {
+          alert ( "ajaxId: " + ajaxId + " " + evt.type );
+      };
+      xhr.open ( "get", "./ajax_info.txt", true );
+      xhr.send ();
+    }
+  };
+}
+
+/* test script */
+/* seems to be last-in-first-out */
+var ajaxes = [];
+for ( var iii = 0; iii < 10; iii++ ) {
+    ajaxes[ iii ] = ajaxFactory ();
+    ajaxes[ iii ].callAjax ( iii );
+}
+ajaxes = null;
+
+</script>
+</head>
+<body>
+<!-- no html body -->
+
+</body>
+</html>
