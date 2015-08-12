@@ -55,7 +55,6 @@ public class DatabaseDemo {
 
 		try {
 			this.conn = DriverManager.getConnection ( connString );
-			this.conn.createStatement ().executeQuery ( "use ais" );
 			this.runSession ();
 		}
 		catch ( SQLException ex ) {
