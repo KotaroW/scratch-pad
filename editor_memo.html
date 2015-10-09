@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+html, body {
+height: 100%;
+}
+body {
+margin: 0;
+}
+div[contenteditable="true"] {
+clear: both;
+height: 50%; overflow-y: scroll;
+border: solid 2px #aaa;
+}
+#controllers {
+/*margin: 0.25em 0.5em;*/
+padding: 0.25em 0.5em;
+background-color: #eee;
+overflow: hidden;
+}
+#controllers > button {
+font: inherit;
+color: #777;
+width: 1.5em;
+height: 1.5em;
+text-align: center;
+cursor: pointer;
+display: inline-block;
+border: none;
+border-right: 1px solid #aaa;
+float:left;
+}
+#controllers > button:hover
+{
+background: #aaa;
+}
+.underscore {
+text-decoration: underline;
+}
+</style>
+<script>
+function setToBold () {
+document.execCommand ( "bold", false, null );
+}
+
+function checkTextDecorations () {
+alert ( document.queryCommandState ( "bold" ) );
+}
+
+</script>
+</head>
+<body>
+<div id="controllers">
+<button onclick="setToBold()"><strong>B</strong></button>
+<button><em><strong>I</strong></em></button>
+<button class="underscore"><strong>U</strong></button>
+</div>
+<div contenteditable="true" onmouseup="checkTextDecorations();">this is a test.
+</div>
+
+</body>
+</html>
