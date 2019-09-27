@@ -2,7 +2,7 @@
 #
 # file: dbdemo.py
 # MySQL-Terminal-like program
-#
+# for Python3
 ###############################################################
 
 #!/usr/bin/python
