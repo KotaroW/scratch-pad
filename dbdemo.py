@@ -21,7 +21,7 @@ passwordKeyString 	= "password"
 class Database:
 	# SQL Query Types
 	# private class variable
-	__SQL_CMD_TYPES = [ "create", "drop", "delete", "insert", "quit", "select", "update", "use" ]
+	__SQL_CMD_TYPES = [ "create", "drop", "delete", "insert", "quit", "select", "update", "use", "show" ]
 	__INDEX_CREATE	= 0
 	__INDEX_DROP	= 1
 	__INDEX_DELETE	= 2
@@ -30,7 +30,7 @@ class Database:
 	__INDEX_SELECT	= 5
 	__INDEX_UPDATE	= 6
 	__INDEX_USE		= 7
-
+	__INDEX_SHOW	= 8
 
 	# argument "logininfo" is a tuple type with a dictionary type in it.
 	def __init__ ( self, logininfo ):
@@ -63,8 +63,8 @@ such as "show" command, are still under development.\n\n"""
 			self.dbcursor = self.dbconnection.cursor ()
 			self.printWelcomeMsg ()
 
-		except MySQLdb.Error, Argument:
-			print ( Argument )
+		except MySQLdb.Error as e:
+			print ( e )
 			exit ( 1 )
 
 		self.openSession ()
@@ -101,6 +101,9 @@ such as "show" command, are still under development.\n\n"""
 			elif cmdType == Database.__SQL_CMD_TYPES[ Database.__INDEX_SELECT ]:
 				self.executeQuery ( cmdString )
 
+			# SHOW
+			elif cmdType == Database.__SQL_CMD_TYPES[ Database.__INDEX_SHOW ]:
+				self.executeQuery ( cmdString )
 
 			elif cmdType == Database.__SQL_CMD_TYPES[ Database.__INDEX_USE ]:
 				self.selectDB ( cmdString )
@@ -115,7 +118,7 @@ such as "show" command, are still under development.\n\n"""
 
 		while cmdString == "":
 			try:
-				cmdString = raw_input ( "YourSQL>> " )
+				cmdString = input ( "YourSQL>> " )
 			# if ctrl+D pressed
 			except EOFError:
 				print
@@ -124,11 +127,11 @@ such as "show" command, are still under development.\n\n"""
 			except KeyboardInterrupt:
 				print
 				sys.exit ()
-			except Exception, Argument:
-				print ( Argument )
+			except Exception as e:
+				print ( e )
 				sys.exit ( 1 )
 
-			
+
 		return cmdString
 
 
@@ -157,18 +160,18 @@ such as "show" command, are still under development.\n\n"""
 		try:
 			self.dbcursor.execute ( cmdString )
 
-		except MySQLdb.Error, Argument:
-			print ( Argument )
+		except MySQLdb.Error as e:
+			print ( e )
 			self.dbconnection.rollback ()
 			return
 
-		except MySQLdb.Warning, Argument:
-			print ( Argument )
+		except MySQLdb.Warning as e:
+			print ( e )
 			self.dbconnection.rollback ()
 			return
 
-		except Exception, Argument:
-			print ( Argument )
+		except Exception as e:
+			print ( e )
 			self.dbconnection.rollback ()
 			return
 
@@ -193,12 +196,12 @@ such as "show" command, are still under development.\n\n"""
 				print ( "%d rows in set" % ( len ( datarows ) ) )
 
 
-		except MySQLdb.Error, Argument:
-			print ( Argument )
+		except MySQLdb.Error as e:
+			print ( e )
 			return
 
-		except Exception, Argument:
-			print ( Argument )
+		except Exception as e:
+			print ( e )
 			return
 
 
@@ -217,11 +220,11 @@ such as "show" command, are still under development.\n\n"""
 			try:
 				self.dbconnection.select_db ( dbname )
 
-			except MySQLdb.Error, Argument:
-				print ( Argument )
+			except MySQLdb.Error as e:
+				print ( e )
 				return
 
-			except Exception, Argument:
+			except Exception as e:
 				print ( Argument )
 				return
 
@@ -232,7 +235,7 @@ such as "show" command, are still under development.\n\n"""
 		print ("Database changed" )
 
 
-######## Database Class Difinition Ens HERE ##########
+######## Database Class Difinition Ends HERE ##########
 
 
 # returning value : dictionary in tuple
@@ -269,7 +272,7 @@ def getoption ( programName, argv ):
 		sys.exit ( 1 )
 
 	password = getpassword ()
-	
+
 	return ( { hostKeyString : host, userKeyString : user, passwordKeyString : password }, )
 
 
